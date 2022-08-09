@@ -1,6 +1,8 @@
-import { auth } from "firebase-app/firebase-config";
+import { useAuth } from "contexts/auth-context";
+import { auth, db } from "firebase-app/firebase-config";
 import { signOut } from "firebase/auth";
-import React from "react";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const SidebarStyles = styled.div`
@@ -32,6 +34,14 @@ const SidebarStyles = styled.div`
     &:hover {
       background: #f1fbf7;
       color: ${(props) => props.theme.primary};
+    }
+  }
+  .disable {
+    cursor: default;
+    opacity: 0.5;
+    &:hover {
+      background: transparent;
+      color: ${(props) => props.theme.gray80};
     }
   }
 `;
@@ -140,7 +150,20 @@ const sidebarLinks = [
   },
 ];
 const Sidebar = () => {
-  console.log(sidebarLinks);
+  const { userInfo } = useAuth();
+  const userId = userInfo?.uid;
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userId) return;
+      const docRef = doc(db, "users", userId);
+      const docData = await getDoc(docRef);
+      setUser(docData.data());
+    }
+    fetchData();
+  }, [userId]);
+  console.log(user);
   return (
     <SidebarStyles className="sidebar">
       <div className="sidebar-logo">
@@ -148,25 +171,34 @@ const Sidebar = () => {
         <span>Social Blogging</span>
       </div>
       {sidebarLinks.map((link) => {
-        if (link.onClick) {
+        if (user?.role == 1) {
+          if (link.onClick) {
+            return (
+              <NavLink
+                to={link.url}
+                className="menu-item"
+                onClick={link.onClick}
+                key={link.title}
+              >
+                <span className="menu-icon">{link.icon}</span>
+                <span className="menu-text">{link.title}</span>
+              </NavLink>
+            );
+          }
           return (
-            <NavLink
-              to={link.url}
-              className="menu-item"
-              onClick={link.onClick}
-              key={link.title}
-            >
+            <NavLink to={link.url} className="menu-item" key={link.title}>
               <span className="menu-icon">{link.icon}</span>
               <span className="menu-text">{link.title}</span>
             </NavLink>
           );
+        } else {
+          return (
+            <div className=" menu-item disable" key={link.title}>
+              <span className="menu-icon">{link.icon}</span>
+              <span className="menu-text">{link.title}</span>
+            </div>
+          );
         }
-        return (
-          <NavLink to={link.url} className="menu-item" key={link.title}>
-            <span className="menu-icon">{link.icon}</span>
-            <span className="menu-text">{link.title}</span>
-          </NavLink>
-        );
       })}
     </SidebarStyles>
   );

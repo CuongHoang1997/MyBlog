@@ -56,7 +56,6 @@ const PostAddNew = () => {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState([]);
   const [content, setContent] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUserData() {
