@@ -1,5 +1,9 @@
 import { Button } from "components/button";
-import React from "react";
+import { useAuth } from "contexts/auth-context";
+import { db } from "firebase-app/firebase-config";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 const DashboardHeaderStyles = styled.div`
@@ -46,6 +50,20 @@ const DashboardHeaderStyles = styled.div`
 `;
 
 const DashboardHeader = () => {
+  const { userInfo } = useAuth();
+  const userId = userInfo?.uid;
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userId) return;
+      const docRef = doc(db, "users", userId);
+      const docData = await getDoc(docRef);
+      setUser(docData.data());
+    }
+    fetchData();
+  }, [userId]);
+
   const menuLinks = [
     {
       url: "/",
@@ -76,11 +94,11 @@ const DashboardHeader = () => {
           </ul>
         </div>
         <div className="flex gap-x-5">
-          <Button to="/dashboard" className="header-button" height="52px">
+          <Button to="/manage/add-post" className="header-button" height="52px">
             Thêm bài viết
           </Button>
           <div className="header-avatar">
-            <img src="/images/avatar.jpg" alt="" />
+            <img src={user?.avatar} alt="" />
           </div>
         </div>
       </div>

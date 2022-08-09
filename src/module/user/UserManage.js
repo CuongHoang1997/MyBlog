@@ -86,7 +86,7 @@ const UserManage = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Email</th>
+            <th>Địa chỉ email</th>
             <th>Tên người dùng</th>
             <th>Thông tin cá nhân</th>
             <th>Quyền truy cập</th>

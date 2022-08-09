@@ -1,9 +1,9 @@
 import ImageUpload from "components/image/ImageUpload";
 import DashboardHeading from "module/dashboard/DashboardHeading";
-import React from "react";
+import React, { useState } from "react";
 import useFirebaseImage from "hooks/useFirebaseImage";
 import { Field } from "components/field";
-import { Input } from "components/input";
+import { Input, TextArea } from "components/input";
 import { Label } from "components/label";
 import { FieldCheckboxes } from "components/field";
 import { Radio } from "components/checkbox";
@@ -49,7 +49,9 @@ const UserUpdate = () => {
         avatar: image,
       });
       toast.success("Cập nhật thông tin thành công");
-      navigate("/manage/user");
+      if (values.role == 1) {
+        navigate("/manage/user");
+      } else navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +73,6 @@ const UserUpdate = () => {
     async function fetchData() {
       const colRef = doc(db, "users", userId);
       const docData = await getDoc(colRef);
-      console.log(docData.data());
       reset(docData && docData.data());
     }
     fetchData();
@@ -143,14 +144,6 @@ const UserUpdate = () => {
                 control={control}
               ></Input>
             </Field>
-            <Field>
-              <Label>Số điện thoại</Label>
-              <Input
-                name="phone"
-                placeholder="Nhập số điện thoại của bạn..."
-                control={control}
-              ></Input>
-            </Field>
           </div>
           <Field>
             <Label>Phân quyền</Label>
@@ -175,6 +168,16 @@ const UserUpdate = () => {
                 Người dùng
               </Radio>
             </FieldCheckboxes>
+          </Field>
+        </div>
+        <div className="mx-5">
+          <Field>
+            <Label>Giới thiệu bản thân</Label>
+            <TextArea
+              name="description"
+              placeholder="Giới thiệu ngắn gọn về bản thân"
+              control={control}
+            ></TextArea>
           </Field>
         </div>
         <Button

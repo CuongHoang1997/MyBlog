@@ -26,6 +26,12 @@ import {
 } from "firebase/firestore";
 import { db } from "firebase-app/firebase-config";
 import { useAuth } from "contexts/auth-context";
+import ReactQuill, { Quill } from "react-quill";
+import ImageUploader from "quill-image-uploader";
+import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+
+Quill.register("modules/imageUploader", ImageUploader);
 
 const PostAddNewStyles = styled.div``;
 
@@ -35,7 +41,7 @@ const PostAddNew = () => {
     defaultValues: {
       title: "",
       slug: "",
-      status: 2,
+      status: 1,
       hot: false,
       image: "",
       category: {},
@@ -48,14 +54,16 @@ const PostAddNew = () => {
   const { image, progress, handleDelete, changeImage, handleResetUpload } =
     useFirebaseImage(setValue, getValues);
   const [category, setCategory] = useState([]);
-  const [selectCategory, setSelectCategory] = useState("");
+  const [selectCategory, setSelectCategory] = useState([]);
+  const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
-      if (!userInfo.email) return;
+    async function fetchUserData() {
+      if (!userInfo?.email) return;
       const q = query(
         collection(db, "users"),
-        where("email", "==", userInfo.email)
+        where("email", "==", userInfo?.email)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -65,9 +73,9 @@ const PostAddNew = () => {
         });
       });
     }
-    fetchData();
+    fetchUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo.email]);
+  }, [userInfo?.email]);
 
   const addPost = async (values) => {
     const cloneValues = { ...values };
@@ -78,19 +86,22 @@ const PostAddNew = () => {
       ...cloneValues,
       image,
       createdAt: serverTimestamp(),
+      content,
+      categoryId: cloneValues.category.id,
     });
     reset({
       title: "",
       slug: "",
-      status: 2,
+      status: 1,
       hot: false,
       image: "",
       category: {},
       user: {},
     });
     setSelectCategory({});
+    setContent("");
     handleResetUpload();
-    toast.success("Create new post successfully!");
+    toast.success("Thêm bài viết thành công!");
   };
 
   useEffect(() => {
@@ -118,7 +129,18 @@ const PostAddNew = () => {
     });
     setSelectCategory(item);
   };
-  console.log(category);
+
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      ["blockquote"],
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["link", "image"],
+    ],
+  };
+
   return (
     <PostAddNewStyles>
       <h1 className="dashboard-heading">Thêm bài viết</h1>
@@ -211,7 +233,19 @@ const PostAddNew = () => {
             ></Toggle>
           </Field>
         </div>
-        <div className="grid grid-cols-2 "></div>
+        <div className="mx-8">
+          <Field>
+            <Label>Nội dung</Label>
+            <div>
+              <ReactQuill
+                modules={modules}
+                theme="snow"
+                value={content}
+                onChange={setContent}
+              />
+            </div>
+          </Field>
+        </div>
         <Button type="submit" className="mx-auto max-w-[400px] mt-10">
           Thêm bài viết
         </Button>

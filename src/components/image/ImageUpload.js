@@ -37,7 +37,7 @@ const ImageUpload = (props) => {
         <>
           <img src={image} className="w-full h-full object-cover" alt="" />
           <button
-            className="p-1 text-gray-600 absolute z-10 m-auto opacity-50 hover:opacity-100 "
+            className="p-3 bg-white rounded-full text-gray-600 absolute z-10 m-auto opacity-0 hover:opacity-100 "
             onClick={handleDelete}
             type="button"
           >

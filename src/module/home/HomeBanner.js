@@ -57,14 +57,9 @@ const Banner = () => {
             rộng lớn này bằng con mắt của trẻ em.
           </p>
           <div className="getstarted">
-            {!userInfo ? (
-              <Button className="button-banner" to="/sign-in">
-                Bắt đầu
-              </Button>
-            ) : (
-              <Button className="button-banner">Khám phá thôi</Button>
-            )}
-            <span>
+            <Button className="button-banner">Khám phá thôi</Button>
+
+            <button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -81,7 +76,7 @@ const Banner = () => {
                   d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
                 />
               </svg>
-            </span>
+            </button>
           </div>
         </div>
         <div className="banner-image">

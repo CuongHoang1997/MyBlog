@@ -24,9 +24,9 @@ const PostInfoStyles = styled.div`
 const PostInfo = ({
   type = "white",
   className = "",
-  to = "/",
   date = "",
   author = "",
+  to = "/",
 }) => {
   return (
     <PostInfoStyles className={className}>

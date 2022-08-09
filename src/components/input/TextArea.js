@@ -2,10 +2,10 @@ import React from "react";
 import { useController } from "react-hook-form";
 import styled from "styled-components";
 
-const InputStyles = styled.div`
+const TextAreaStyles = styled.div`
   position: relative;
   width: 100%;
-  input {
+  textarea {
     width: 100%;
     padding: ${(props) => (props.hasIcon ? "10px 60px 10px 10px" : "10px")};
     border: 2px solid transparent;
@@ -14,7 +14,7 @@ const InputStyles = styled.div`
     font-weight: 500;
     transition: all 0.3s linear;
   }
-  input:focus {
+  textarea:focus {
     border-color: ${(props) => props.theme.primary};
     background-color: #fff;
   }
@@ -28,7 +28,7 @@ const InputStyles = styled.div`
   }
 `;
 
-const Input = ({
+const TextArea = ({
   name = "",
   type = "text",
   children,
@@ -39,8 +39,8 @@ const Input = ({
 }) => {
   const { field } = useController({ control, name, defaultValue: "" });
   return (
-    <InputStyles hasIcon={children ? true : false}>
-      <input
+    <TextAreaStyles hasIcon={children ? true : false}>
+      <textarea
         id={name}
         type={type}
         className={className}
@@ -48,8 +48,8 @@ const Input = ({
         {...props}
       />
       {children}
-    </InputStyles>
+    </TextAreaStyles>
   );
 };
 
-export default Input;
+export default TextArea;

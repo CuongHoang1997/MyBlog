@@ -5,15 +5,15 @@ const FieldStyle = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  width: 450px;
+  min-width: 450px;
   margin: 20px auto;
   &:last-child {
     margin-bottom: 0;
   }
 `;
 
-const Field = ({ children }) => {
-  return <FieldStyle>{children}</FieldStyle>;
+const Field = ({ children, className = "" }) => {
+  return <FieldStyle className={className}>{children}</FieldStyle>;
 };
 
 export default Field;

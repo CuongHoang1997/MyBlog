@@ -1,4 +1,5 @@
 import React from "react";
+import slugify from "slugify";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -27,20 +28,27 @@ const PostItemStyles = styled.div`
   }
 `;
 
-const PostItem = () => {
+const PostItem = ({ data }) => {
+  if (!data) return null;
   return (
     <PostItemStyles>
       <div className="post-image">
-        <PostImage
-          url="https://images.unsplash.com/photo-1570993492881-25240ce854f4?ixlib=rb-1.2.1&
-        ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2290&q=80"
-        ></PostImage>
+        <PostImage url={data.image}></PostImage>
       </div>
-      <PostCategory>Kiến thức</PostCategory>
-      <PostTitle className="post-title">
-        Hướng dẫn setup phòng cực chill dành cho người mới
+      <PostCategory to={`/category/${data.category?.name}`}>
+        {data.category?.name}
+      </PostCategory>
+      <PostTitle to={`/${data.slug}`} className="post-title">
+        {data.title}
       </PostTitle>
-      <PostInfo type="black"></PostInfo>
+      <PostInfo
+        author={data?.user?.fullname}
+        date={new Date(data?.createdAt?.seconds * 1000).toLocaleDateString(
+          "vi-VI"
+        )}
+        type="black"
+        to={`/user/${data.user?.username}`}
+      ></PostInfo>
     </PostItemStyles>
   );
 };

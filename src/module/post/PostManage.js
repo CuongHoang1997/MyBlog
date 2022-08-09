@@ -113,7 +113,7 @@ const PostManage = () => {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <h3 className="">{item?.user.username}</h3>
+                      <h3 className="">{item?.user.fullname}</h3>
                       <time className="text-gray-500">
                         {new Date(
                           item.createdAt.seconds * 1000
@@ -128,15 +128,19 @@ const PostManage = () => {
                     <LabelStatus type="success">Chấp thuận</LabelStatus>
                   )}
                   {Number(item.status) === postStatus.PENDING && (
-                    <LabelStatus type="warning">Từ chối</LabelStatus>
+                    <LabelStatus type="warning">Đang chờ</LabelStatus>
                   )}
                   {Number(item.status) === postStatus.REJECTED && (
-                    <LabelStatus type="warning">Từ chối</LabelStatus>
+                    <LabelStatus type="danger">Từ chối</LabelStatus>
                   )}
                 </td>
                 <td>
                   <div className="flex justify-between items-center">
-                    <ActionView></ActionView>
+                    <ActionView
+                      onClick={() => {
+                        navigate(`/${item.slug}`);
+                      }}
+                    ></ActionView>
                     <ActionEdit
                       onClick={() => {
                         navigate(`/manage/update-post?id=${item.id}`);
@@ -151,9 +155,6 @@ const PostManage = () => {
             ))}
         </tbody>
       </Table>
-      <div className="mt-10">
-        <Pagination></Pagination>
-      </div>
     </div>
   );
 };

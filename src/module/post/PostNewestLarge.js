@@ -1,4 +1,5 @@
 import React from "react";
+import slugify from "slugify";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -9,7 +10,7 @@ const PostNewestLargeStyles = styled.div`
     &-image {
       display: block;
       margin-bottom: 16px;
-      height: 433px;
+      height: 400px;
       border-radius: 16px;
     }
 
@@ -34,20 +35,29 @@ const PostNewestLargeStyles = styled.div`
   }
 `;
 
-const PostNewestLarge = () => {
+const PostNewestLarge = ({ data }) => {
+  console.log(data);
+  const date = data?.createdAt?.seconds
+    ? new Date(data?.createdAt?.seconds * 1000)
+    : new Date();
+  const formatDate = new Date(date).toLocaleDateString("vi-VI");
+  if (!data) return null;
   return (
     <PostNewestLargeStyles>
       <div className="post-image">
-        <PostImage
-          url="https://images.unsplash.com/photo-1510519138101-570d1dca3d66?ixlib=rb-1.2.1&
-        ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2294&q=80"
-        ></PostImage>
+        <PostImage url={data.image}></PostImage>
       </div>
-      <PostCategory>Kiến thức</PostCategory>
-      <PostTitle className="post-title">
-        Hướng dẫn setup phòng cực chill dành cho người mới toàn tập
+      <PostCategory to={`/category/${data.category?.name}`}>
+        {data.category?.name}
+      </PostCategory>
+      <PostTitle to={`/${data.slug}`} className="post-title">
+        {data.title}
       </PostTitle>
-      <PostInfo></PostInfo>
+      <PostInfo
+        author={data.user?.fullname}
+        to={`/user/${data.user?.username}`}
+        date={formatDate}
+      ></PostInfo>
     </PostNewestLargeStyles>
   );
 };

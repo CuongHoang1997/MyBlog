@@ -24,7 +24,7 @@ const HomeFeature = () => {
       limit(3)
     );
     onSnapshot(q, (snapshot) => {
-      const result = [];
+      const result = []; 
       snapshot.forEach((doc) => {
         result.push({
           id: doc.id,

@@ -12,7 +12,7 @@ const PostFeatureItemStyles = styled.div`
   width: 100%;
   border-radius: 16px;
   position: relative;
-  height: 169px;
+  height: 150px;
   border-radius: 16px;
   .post {
     &-image {
@@ -48,12 +48,11 @@ const PostFeatureItemStyles = styled.div`
   }
 
   @media screen and (min-width: 1024px) {
-    height: 272px;
+    height: 252px;
   }
 `;
 const PostFeatureItem = ({ data }) => {
   if (!data || !data.id) return null;
-  console.log(data.createdAt);
   const date = data?.createdAt?.seconds
     ? new Date(data?.createdAt?.seconds * 1000)
     : new Date();

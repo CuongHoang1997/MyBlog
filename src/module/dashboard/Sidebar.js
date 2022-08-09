@@ -1,7 +1,7 @@
 import { auth } from "firebase-app/firebase-config";
 import { signOut } from "firebase/auth";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const SidebarStyles = styled.div`
   width: 300px;
@@ -14,7 +14,7 @@ const SidebarStyles = styled.div`
     font-weight: 600;
     gap: 0 20px;
     img {
-      max-width: 40px;
+      max-width: 50px;
     }
     margin-bottom: 20px;
     padding: 20px 20px 0;
@@ -35,6 +35,7 @@ const SidebarStyles = styled.div`
     }
   }
 `;
+
 const sidebarLinks = [
   {
     title: "Bảng điều khiển",
@@ -117,8 +118,9 @@ const sidebarLinks = [
     ),
   },
   {
+    onClick: () => signOut(auth),
     title: "Đăng xuất",
-    url: "/sign-in",
+    url: "",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -135,20 +137,20 @@ const sidebarLinks = [
         />
       </svg>
     ),
-    onClick: () => signOut(auth),
   },
 ];
 const Sidebar = () => {
+  console.log(sidebarLinks);
   return (
     <SidebarStyles className="sidebar">
       <div className="sidebar-logo">
-        <img srcSet="/logo.png 2x" alt="" />
-        <span>Monkey Blogging</span>
+        <img src="/images/logo1.png" alt="" />
+        <span>Social Blogging</span>
       </div>
       {sidebarLinks.map((link) => {
         if (link.onClick) {
           return (
-            <div
+            <NavLink
               to={link.url}
               className="menu-item"
               onClick={link.onClick}
@@ -156,7 +158,7 @@ const Sidebar = () => {
             >
               <span className="menu-icon">{link.icon}</span>
               <span className="menu-text">{link.title}</span>
-            </div>
+            </NavLink>
           );
         }
         return (

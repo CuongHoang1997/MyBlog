@@ -1,6 +1,9 @@
 import { Button } from "components/button";
 import { useAuth } from "contexts/auth-context";
-import React from "react";
+import { auth, db } from "firebase-app/firebase-config";
+import { signOut } from "firebase/auth";
+import { doc, getDoc, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -67,7 +70,19 @@ const menuLinks = [
 ];
 const Header = () => {
   const { userInfo } = useAuth();
-  console.log(userInfo);
+  const userId = userInfo?.uid;
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userId) return;
+      const docRef = doc(db, "users", userId);
+      const docData = await getDoc(docRef);
+      setUser(docData.data());
+    }
+    fetchData();
+  }, [userId]);
+
   return (
     <HeaderStyle>
       <div className="container">
@@ -106,16 +121,65 @@ const Header = () => {
               </svg>
             </span>
           </div>
-          {userInfo ? (
-            <div className="header-auth">
-              Hi,
-              <strong className="text-primary">{userInfo?.displayName}</strong>
-            </div>
-          ) : (
-            <Button className="btn-header" to="/sign-in">
-              Đăng nhập
-            </Button>
-          )}
+          <div className="flex justify-center items-center gap-x-5">
+            {userInfo ? (
+              <div className="header-auth">
+                Hi,
+                <strong className="text-primary">
+                  {userInfo?.displayName}
+                </strong>
+              </div>
+            ) : (
+              <Button className="btn-header" to="/sign-in">
+                Đăng nhập
+              </Button>
+            )}
+            {userInfo && user?.role == 1 && (
+              <NavLink to="/dashboard">
+                <Button className="min-w-[100px]">Quản lý</Button>
+              </NavLink>
+            )}
+            {userInfo && user?.role == 2 && (
+              <span className="btn-menu relative">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-10 border border-gray-500 border-opacity-30 p-1 rounded-md shadow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+                <div
+                  className="menu-user absolute w-[200px] h-[150px] bg-gray-100 right-0 shadow top-[50px] 
+                  flex flex-col justify-between "
+                >
+                  <a
+                    className=" hover:bg-blue-200 p-3"
+                    href={`/manage/update-user?id=${userId}`}
+                  >
+                    Chỉnh sửa thông tin
+                  </a>
+                  <a className=" hover:bg-blue-200 p-3" href="/manage/add-post">
+                    Thêm bài viết
+                  </a>
+                  <a
+                    className=" hover:bg-blue-200 p-3"
+                    href="/"
+                    onClick={() => signOut(auth)}
+                  >
+                    Đăng xuất
+                  </a>
+                </div>
+                <div className="arrow absolute"></div>
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </HeaderStyle>
