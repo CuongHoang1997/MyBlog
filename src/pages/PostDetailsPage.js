@@ -1,8 +1,6 @@
-import Heading from "components/layout/Heading";
 import DefaultLayout from "components/layout/DefaultLayout";
 import PostCategory from "module/post/PostCategory";
 import PostImage from "module/post/PostImage";
-import PostItem from "module/post/PostItem";
 import PostInfo from "module/post/PostInfo";
 import React, { useState } from "react";
 import styled from "styled-components";
