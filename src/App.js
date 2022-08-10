@@ -19,7 +19,6 @@ import { AuthProvider } from "./contexts/auth-context";
 import SignUpPage from "./pages/SignUpPage";
 import { Suspense } from "react";
 import React from "react";
-
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 
 function App() {
@@ -74,10 +73,10 @@ function App() {
                 path="/manage/user"
                 element={<UserManage></UserManage>}
               ></Route>
-              <Route
+              {/* <Route
                 path="/manage/add-user"
                 element={<UserAddNew></UserAddNew>}
-              ></Route>
+              ></Route> */}
               <Route
                 path="/manage/update-user"
                 element={<UserUpdate></UserUpdate>}

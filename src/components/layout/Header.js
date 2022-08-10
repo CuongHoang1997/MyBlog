@@ -29,24 +29,13 @@ const HeaderStyle = styled.div`
     font-weight: 600;
   }
   .header-search {
-    padding: 10px 20px;
     margin-left: auto;
     position: relative;
-    border: 1px solid #ccc;
-    border-radius: 8px;
     display: flex;
     align-items: center;
     margin-right: 20px;
   }
-  .search-input {
-    padding-right: 25px;
-  }
-  .search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+
   .btn-header {
     min-width: 150px;
     margin-top: 0;
@@ -97,34 +86,11 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          <div className="header-search">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Tìm kiếm..."
-            />
-            <span className="search-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="30"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </span>
-          </div>
+          <div className="header-search"></div>
           <div className="flex justify-center items-center gap-x-5">
             {userInfo ? (
               <div className="header-auth">
-                Hi,
+                Xin chào,
                 <strong className="text-primary">
                   {userInfo?.displayName}
                 </strong>

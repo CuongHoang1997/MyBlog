@@ -15,6 +15,23 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "firebase-app/firebase-config";
 import { toast } from "react-toastify";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  fullname: yup.string().required("Mời nhập họ tên tác giả"),
+  username: yup.string().required("Mời nhập tên người dùng"),
+  email: yup
+    .string()
+    .email("Mời nhập đúng định dạng Email")
+    .required("Mời nhập vào email của bạn"),
+  password: yup
+    .string()
+    .min(6, "Mật khẩu phải có ít nhất 6 kí tự")
+    .required("Mời nhập vào mật khẩu của bạn"),
+  birthday: yup.string().required("Mời nhập ngày tháng năm sinh"),
+  description: yup.string().required("Mời nhập tiểu sử giới thiệu bản thân"),
+});
 
 const UserUpdate = () => {
   const {
@@ -24,9 +41,10 @@ const UserUpdate = () => {
     setValue,
     getValues,
     reset,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: "onchange",
+    resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -35,6 +53,13 @@ const UserUpdate = () => {
   const imageUrl = getValues("avatar");
   const imageRegex = /%2F(\S+)\?/gm.exec(imageUrl);
   const imageName = imageRegex?.length > 0 ? imageRegex[1] : "";
+
+  useEffect(() => {
+    const arrayErrors = Object.values(errors);
+    if (arrayErrors.length > 0) {
+      toast.error(arrayErrors[0].message);
+    }
+  }, [errors]);
 
   const { image, setImage, progress, handleDelete, changeImage } =
     useFirebaseImage(setValue, getValues, imageName, deleteAvatar);
@@ -49,9 +74,7 @@ const UserUpdate = () => {
         avatar: image,
       });
       toast.success("Cập nhật thông tin thành công");
-      if (values.role == 1) {
-        navigate("/manage/user");
-      } else navigate("/");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

@@ -67,7 +67,7 @@ const SignUpPage = () => {
     });
     toast.success("Đăng ký thành công");
     setTimeout(() => {
-      navigate("/sign-in");
+      navigate("/");
     }, 1000);
   };
   useEffect(() => {

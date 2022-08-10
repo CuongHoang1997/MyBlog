@@ -13,13 +13,33 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import slugify from "slugify";
 import { categoryStatus } from "utils/constants";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  name: yup.string().required("Mời nhập vào tên danh mục"),
+});
 
 const CategoryUpdate = () => {
   const navigate = useNavigate();
-  const { control, reset, handleSubmit, watch } = useForm({
+  const {
+    control,
+    reset,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
     defaultValues: {},
+    resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    const arrayErrors = Object.values(errors);
+    if (arrayErrors.length > 0) {
+      toast.error(arrayErrors[0].message);
+    }
+  }, [errors]);
 
   const [params] = useSearchParams();
   const categoryId = params.get("id");
@@ -43,6 +63,7 @@ const CategoryUpdate = () => {
     toast.success("Cập nhật thành công");
     navigate("/manage/category");
   };
+
   return (
     <div>
       <DashboardHeading title="Chỉnh sửa danh mục"></DashboardHeading>
@@ -66,7 +87,6 @@ const CategoryUpdate = () => {
           </Field>
         </div>
         <div className="form-layout">
-        
           <Field>
             <Label>Trạng thái</Label>
             <FieldCheckboxes>

@@ -23,6 +23,16 @@ import { toast } from "react-toastify";
 import { postStatus } from "utils/constants";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  title: yup.string().required("Mời nhập vào tiêu đề bài viết"),
+  category: yup
+    .object()
+    .shape({ name: yup.string().required("Mời bạn chọn danh mục") }),
+  content: yup.string().required("Mời nhập vào nội dung bài viết"),
+});
 
 const PostUpdate = () => {
   const {
@@ -32,9 +42,10 @@ const PostUpdate = () => {
     setValue,
     reset,
     getValues,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(schema),
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
@@ -49,6 +60,13 @@ const PostUpdate = () => {
 
   const { image, setImage, progress, handleDelete, changeImage } =
     useFirebaseImage(setValue, getValues, imageName, deleteImage);
+
+  useEffect(() => {
+    const arrayErrors = Object.values(errors);
+    if (arrayErrors.length > 0) {
+      toast.error(arrayErrors[0].message);
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (!postId) return;
@@ -93,6 +111,7 @@ const PostUpdate = () => {
     if (!isValid) return;
     try {
       const docRef = doc(db, "posts", postId);
+
       await updateDoc(docRef, {
         ...values,
         image,

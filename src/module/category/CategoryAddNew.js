@@ -6,11 +6,17 @@ import { Label } from "components/label";
 import { db } from "firebase-app/firebase-config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import DashboardHeading from "module/dashboard/DashboardHeading";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import slugify from "slugify";
 import { categoryStatus } from "utils/constants";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  name: yup.string().required("Mời nhập vào tên danh mục"),
+});
 
 const CategoryAddNew = () => {
   const {
@@ -22,6 +28,7 @@ const CategoryAddNew = () => {
     reset,
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       slug: "",
@@ -29,6 +36,14 @@ const CategoryAddNew = () => {
       createdAt: new Date(),
     },
   });
+
+  useEffect(() => {
+    const arrayErrors = Object.values(errors);
+    if (arrayErrors.length > 0) {
+      toast.error(arrayErrors[0].message);
+    }
+  }, [errors]);
+
   const handleAddCategory = async (values) => {
     const newValues = { ...values };
     newValues.slug = slugify(newValues.name || newValues.slug, { lower: true });

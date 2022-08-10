@@ -30,14 +30,33 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageUploader from "quill-image-uploader";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  title: yup.string().required("Mời nhập vào tiêu đề bài viết"),
+  category: yup
+    .object()
+    .shape({ name: yup.string().required("Mời bạn chọn danh mục") }),
+  content: yup.string().required("Mời nhập vào nội dung bài viết"),
+});
 
 Quill.register("modules/imageUploader", ImageUploader);
 
 const PostAddNewStyles = styled.div``;
 
 const PostAddNew = () => {
-  const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
+  const {
+    control,
+    watch,
+    setValue,
+    handleSubmit,
+    getValues,
+    reset,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
+    resolver: yupResolver(schema),
     defaultValues: {
       title: "",
       slug: "",
@@ -48,6 +67,13 @@ const PostAddNew = () => {
       user: {},
     },
   });
+  useEffect(() => {
+    const arrayErrors = Object.values(errors);
+    if (arrayErrors.length > 0) {
+      toast.error(arrayErrors[0].message);
+    }
+  }, [errors]);
+
   const { userInfo } = useAuth();
   const watchStatus = watch("status");
   const watchHot = watch("hot");
@@ -56,6 +82,7 @@ const PostAddNew = () => {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState([]);
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUserData() {
@@ -101,6 +128,7 @@ const PostAddNew = () => {
     setContent("");
     handleResetUpload();
     toast.success("Thêm bài viết thành công!");
+    navigate("/");
   };
 
   useEffect(() => {

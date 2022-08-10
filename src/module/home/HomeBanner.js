@@ -46,16 +46,19 @@ const Banner = () => {
     <BannerStyle>
       <div className="banner">
         <div className="banner-content">
-          <div className="banner-heading">Social Blogging</div>
+          <div className="banner-heading mb-5">Social Blogging</div>
           <p className="banner-decs">
-            Tôi yêu giáo dục và văn hóa. Tôi đã đi qua 14 quốc gia với hầu hết
-            là ba lô và các chương trình ngắn hạn về giáo dục và xây dựng hòa
-            bình. Một nửa trải nghiệm của tôi được xuất bản trong cuốn sách đầu
-            tiên "Bên kia ranh giới" ("Bên kia ranh giới" - Việt ngữ) vào tháng
-            1 năm 2017. Viết là một cách ý nghĩa để tôi lưu lại ký ức, nuôi
-            dưỡng tiềm năng và truyền cảm hứng cho người khác. Khám phá thế giới
-            rộng lớn này bằng con mắt của trẻ em.
+            Đọc và chia sẻ trải nghiệm của chúng tôi hay chia sẻ những trải
+            nghiệm của bạn thông qua việc trở thành tác giả. Vậy tại sao nên
+            viết blog hay trở thành tác giả của một blog ? Dưới đây là một vài
+            lý do bạn nên viết blog:
           </p>
+          <ul className="font-bold">
+            <li>1. Nâng cao kỹ năng viết</li>
+            <li>2. Học hỏi những điều mới</li>
+            <li>3. Sở hữu nội dung</li>
+            <li>4. Truyền cảm hứng cho người khác</li>
+          </ul>
           <div className="getstarted">
             <Button className="button-banner">Khám phá thôi</Button>
 

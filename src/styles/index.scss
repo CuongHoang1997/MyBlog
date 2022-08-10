@@ -95,3 +95,38 @@ a {
   background-color: transparent;
   right: 0;
 }
+
+.link {
+  position: relative;
+  padding: 0 0 2px;
+  color: #105b94;
+  letter-spacing: 1px;
+  text-decoration: none;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: currentcolor;
+    transform: translateX(-110%);
+    transition: transform 1s ease;
+  }
+
+  &:hover::before {
+    transform: translateX(110%);
+    color: #316f9e;
+  }
+}
+
+.text-footer {
+  background: linear-gradient(to right, #30cfd0 0%, #330867 100%);
+  background-clip: text;
+  color: transparent;
+  font-family: "Oleo Script Swash Caps", cursive;
+}
+.text-footer-item {
+  font-size: 48px;
+}
