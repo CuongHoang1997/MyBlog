@@ -49,7 +49,6 @@ const UserUpdate = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const userId = params.get("id");
-  const watchRole = watch("role");
   const imageUrl = getValues("avatar");
   const imageRegex = /%2F(\S+)\?/gm.exec(imageUrl);
   const imageName = imageRegex?.length > 0 ? imageRegex[1] : "";
@@ -157,40 +156,21 @@ const UserUpdate = () => {
           </Field>
         </div>
         <div className="form-layout">
-          <div className="flex flex-col">
-            {" "}
-            <Field>
-              <Label>Ngày tháng năm sinh</Label>
-              <Input
-                name="birthday"
-                placeholder="dd/mm/yyyy"
-                control={control}
-              ></Input>
-            </Field>
-          </div>
           <Field>
-            <Label>Phân quyền</Label>
-            <FieldCheckboxes>
-              <Radio
-                name="role"
-                control={control}
-                checked={Number(watchRole) === userStatus.ADMIN}
-                onClick={() => setValue("role", "admin")}
-                value={userStatus.ADMIN}
-              >
-                Quản trị viên
-              </Radio>
-
-              <Radio
-                name="role"
-                control={control}
-                checked={Number(watchRole) === userStatus.USER}
-                onClick={() => setValue("role", "user")}
-                value={userStatus.USER}
-              >
-                Người dùng
-              </Radio>
-            </FieldCheckboxes>
+            <Label>Ngày tháng năm sinh</Label>
+            <Input
+              name="birthday"
+              placeholder="dd/mm/yyyy"
+              control={control}
+            ></Input>
+          </Field>
+          <Field>
+            <Label>Số điện thoại</Label>
+            <Input
+              name="phone"
+              placeholder="Số điện thoại của bạn..."
+              control={control}
+            ></Input>
           </Field>
         </div>
         <div className="mx-5">

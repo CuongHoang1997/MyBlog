@@ -73,10 +73,10 @@ function App() {
                 path="/manage/user"
                 element={<UserManage></UserManage>}
               ></Route>
-              {/* <Route
+              <Route
                 path="/manage/add-user"
                 element={<UserAddNew></UserAddNew>}
-              ></Route> */}
+              ></Route>
               <Route
                 path="/manage/update-user"
                 element={<UserUpdate></UserUpdate>}
