@@ -23,6 +23,7 @@ const SignInPage = () => {
     password: yup.string().required("Mời nhập vào mật khẩu của bạn"),
   });
   const { userInfo } = useAuth();
+
   const navigate = useNavigate();
   //   useEffect(() => {
   //     if (!userInfo.email) navigate("/sign-up");
@@ -38,9 +39,13 @@ const SignInPage = () => {
   });
   const handleSignIn = async (values) => {
     if (!isValid) return;
-    await signInWithEmailAndPassword(auth, values.email, values.password);
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
 
-    navigate("/");
+      navigate("/");
+    } catch (error) {
+      toast.error("Sai tên tài khoản hoặc mật khẩu");
+    }
   };
   useEffect(() => {
     const arrayErrors = Object.values(errors);

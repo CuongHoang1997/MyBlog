@@ -13,7 +13,6 @@ import parse from "html-react-parser";
 import PostRelative from "module/post/PostRelative";
 
 const PostDetailsPageStyles = styled.div`
-  padding-bottom: 100px;
   .post {
     &-header {
       display: flex;

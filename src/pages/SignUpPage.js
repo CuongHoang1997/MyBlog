@@ -41,34 +41,38 @@ const SignUpPage = () => {
   });
   const handleSignUp = async (values) => {
     if (!isValid) return;
+    try {
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      await updateProfile(auth.currentUser, {
+        displayName: values.fullname,
+        photoURL:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_vo9qa25lRRGBs9juFzSsAEaPC5mz_AFoAQ&usqp=CAU",
+      });
 
-    await createUserWithEmailAndPassword(auth, values.email, values.password);
-    await updateProfile(auth.currentUser, {
-      displayName: values.fullname,
-      photoURL:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_vo9qa25lRRGBs9juFzSsAEaPC5mz_AFoAQ&usqp=CAU",
-    });
+      // const colRef = collection(db, "users");
+      // await addDoc(colRef, {
+      //   fullname: values.fullname,
+      //   date: values.birthday,
+      //   email: values.email,
+      //   password: values.password,
+      // });
 
-    // const colRef = collection(db, "users");
-    // await addDoc(colRef, {
-    //   fullname: values.fullname,
-    //   date: values.birthday,
-    //   email: values.email,
-    //   password: values.password,
-    // });
-    await setDoc(doc(db, "users", auth.currentUser.uid), {
-      fullname: values.fullname,
-      email: values.email,
-      password: values.password,
-      username: slugify(values.fullname, { lower: true }),
-      role: 2,
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_vo9qa25lRRGBs9juFzSsAEaPC5mz_AFoAQ&usqp=CAU",
-    });
-    toast.success("Đăng ký thành công");
-    setTimeout(() => {
-      navigate("/");
-    }, 1000);
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
+        fullname: values.fullname,
+        email: values.email,
+        password: values.password,
+        username: slugify(values.fullname, { lower: true }),
+        role: 2,
+        avatar:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_vo9qa25lRRGBs9juFzSsAEaPC5mz_AFoAQ&usqp=CAU",
+      });
+      toast.success("Đăng ký thành công");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      toast.error("Email này đã có người đăng ký");
+    }
   };
   useEffect(() => {
     const arrayErrors = Object.values(errors);

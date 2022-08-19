@@ -19,6 +19,7 @@ import { AuthProvider } from "./contexts/auth-context";
 import SignUpPage from "./pages/SignUpPage";
 import { Suspense } from "react";
 import React from "react";
+import NotFoundPage from "pages/NotFoundPage";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 
 function App() {
@@ -28,6 +29,11 @@ function App() {
         <Suspense>
           <Routes>
             <Route path="/" element={<HomePage></HomePage>}></Route>
+            <Route path="/blog" element={<NotFoundPage></NotFoundPage>}></Route>
+            <Route
+              path="/contact"
+              element={<NotFoundPage></NotFoundPage>}
+            ></Route>
             <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
             <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
 
