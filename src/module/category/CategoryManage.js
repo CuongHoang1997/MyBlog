@@ -70,7 +70,7 @@ const CategoryManage = () => {
           title="Danh mục"
           desc="Quản lý danh mục"
         ></DashboardHeading>
-        <div className="mr-20  w-[200px]">
+        <div className="mr-20 w-[300px] text-[20px]">
           <NavLink to="/manage/add-category">
             <button className="btn-add mb-5 mx-auto w-full bg-green-500 p-3 text-white rounded-lg">
               Thêm danh mục mới
@@ -112,7 +112,7 @@ const CategoryManage = () => {
                   )}
                 </td>
                 <td>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-around items-center">
                     <ActionView></ActionView>
                     <ActionEdit
                       onClick={() => {

@@ -6,9 +6,13 @@ const PostInfoStyles = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   color: inherit;
+  &:hover {
+    transition: all 0.5s;
+    color: #316f9e;
+  }
 
   .post {
     &-dot {

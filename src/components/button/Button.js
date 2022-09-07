@@ -10,8 +10,8 @@ const ButtonStyle = styled.button`
     ${(props) => props.theme.primary},
     #5edba5
   );
-  height: ${(props) => props.height || "50px"};
-  font-size: 18px;
+  height: ${(props) => props.height || "60px"};
+  font-size: 24px;
   font-weight: 600;
   color: white;
   border-radius: 6px;
@@ -36,7 +36,7 @@ const Button = ({
   if (to !== "" && typeof to === "string") {
     return (
       <NavLink to={to}>
-        <ButtonStyle type={type} onclick={onClick} {...props} >
+        <ButtonStyle type={type} onclick={onClick} {...props}>
           {child}
         </ButtonStyle>
       </NavLink>

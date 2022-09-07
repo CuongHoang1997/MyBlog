@@ -7,7 +7,7 @@ const DashboardPage = () => {
       <h1 className="dashboard-heading">
         Trang quản lý dành cho quản trị viên
       </h1>
-      <p className=" ml-5 mr-20 text-xl">
+      <p className=" ml-5 mr-20 text-[24px]">
         Phân quyền sử dụng là phân quyền cho người sử dụng được chỉ định có thể
         truy cập vào các nguồn thông tin trên hệ thống, khi đó người được phân
         quyền mới có thể truy cập vào các hệ thống dữ liệu được đã được phân

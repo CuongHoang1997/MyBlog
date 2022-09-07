@@ -38,7 +38,6 @@ const schema = yup.object({
   category: yup
     .object()
     .shape({ name: yup.string().required("Mời bạn chọn danh mục") }),
-  content: yup.string().required("Mời nhập vào nội dung bài viết"),
 });
 
 Quill.register("modules/imageUploader", ImageUploader);
@@ -65,6 +64,7 @@ const PostAddNew = () => {
       image: "",
       category: {},
       user: {},
+      content: "",
     },
   });
   useEffect(() => {
@@ -269,6 +269,7 @@ const PostAddNew = () => {
                 theme="snow"
                 value={content}
                 onChange={setContent}
+                className="text-[30px]"
               />
             </div>
           </Field>

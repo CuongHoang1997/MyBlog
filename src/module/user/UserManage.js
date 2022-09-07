@@ -68,7 +68,7 @@ const UserManage = () => {
           title="Người dùng"
           desc="Quản lý Người dùng"
         ></DashboardHeading>
-        <div className=" mr-20 w-[200px]">
+        <div className=" mr-20 w-[300px] text-[20px]">
           <NavLink to="/manage/add-user">
             <button className="btn-add mb-5 mx-auto w-full bg-green-500 p-3 text-white rounded-lg">
               Thêm người dùng mới

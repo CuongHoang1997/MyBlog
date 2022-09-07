@@ -4,87 +4,199 @@ import React from "react";
 import styled from "styled-components";
 
 const BannerStyle = styled.div`
-  .banner {
-    display: flex;
-    margin-top: 20px;
-    padding: 40px;
-    height: 520px;
-    align-items: center;
-    justify-content: space-around;
-    background-image: linear-gradient(to right bottom, #316f9e, #5edba5);
+  .carousel {
+    width: 100%;
   }
-  .banner-content {
-    width: 400px;
-    color: white;
+
+  ul.slides {
+    display: block;
+    position: relative;
+    height: 650px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
   }
-  .banner-heading {
-    font-size: 36px;
-    font-weight: 600;
+
+  .slides * {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
-  .banner-decs {
+
+  ul.slides input {
+    display: none;
   }
-  .button-banner {
-    background-color: white;
-    background-image: none;
-    color: #316f9e;
-    width: 200px;
-    margin-top: 0;
-    font-weight: 600;
+
+  .slide-container {
+    display: block;
   }
-  .getstarted {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    column-gap: 10px;
+
+  .slide-image {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+    transition: all 0.7s ease-in-out;
+  }
+
+  .slide-image img {
+    width: auto;
+    min-width: 100%;
+    height: 100%;
+  }
+
+  .carousel-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    font-size: 100px;
+    line-height: 600px;
+    color: #fff;
+  }
+
+  .carousel-controls label {
+    display: none;
+    position: absolute;
+    padding: 0 20px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
+  }
+
+  .slide-image:hover + .carousel-controls label {
+    opacity: 0.5;
+  }
+
+  .carousel-controls label:hover {
+    opacity: 1;
+  }
+
+  .carousel-controls .prev-slide {
+    width: 49%;
+    text-align: left;
+    left: 0;
+  }
+
+  .carousel-controls .next-slide {
+    width: 49%;
+    text-align: right;
+    right: 0;
+  }
+
+  .carousel-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 999;
+    text-align: center;
+  }
+
+  .carousel-dots .carousel-dot {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.5;
+    margin: 10px;
+  }
+
+  input:checked + .slide-container .slide-image {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 1s ease-in-out;
+  }
+
+  input:checked + .slide-container .carousel-controls label {
+    display: block;
+  }
+
+  input#img-1:checked ~ .carousel-dots label#img-dot-1,
+  input#img-2:checked ~ .carousel-dots label#img-dot-2,
+  input#img-3:checked ~ .carousel-dots label#img-dot-3 {
+    opacity: 1;
+  }
+
+  input:checked + .slide-container .nav label {
+    display: block;
   }
 `;
 
 const Banner = () => {
-  const { userInfo } = useAuth();
-
   return (
     <BannerStyle>
-      <div className="banner">
-        <div className="banner-content">
-          <div className="banner-heading mb-5">Social Blogging</div>
-          <p className="banner-decs">
-            Đọc và chia sẻ trải nghiệm của chúng tôi hay chia sẻ những trải
-            nghiệm của bạn thông qua việc trở thành tác giả. Vậy tại sao nên
-            viết blog hay trở thành tác giả của một blog ? Dưới đây là một vài
-            lý do bạn nên viết blog:
-          </p>
-          <ul className="font-bold">
-            <li>1. Nâng cao kỹ năng viết</li>
-            <li>2. Học hỏi những điều mới</li>
-            <li>3. Sở hữu nội dung</li>
-            <li>4. Truyền cảm hứng cho người khác</li>
-          </ul>
-          <div className="getstarted">
-            <Button className="button-banner">Khám phá thôi</Button>
-
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                width="50"
-                height="50"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
+      <div>
+        <div className="carousel">
+          <ul className="slides">
+            <input type="radio" name="radio-buttons" id="img-1" checked />
+            <li className="slide-container">
+              <div className="slide-image">
+                <img
+                  className="object-center"
+                  alt=""
+                  src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzV8fHRlY2hub2xvZ3l8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
                 />
-              </svg>
-            </button>
-          </div>
+              </div>
+              <div className="carousel-controls">
+                <label htmlFor="img-3" className="prev-slide">
+                  <span>&lsaquo;</span>
+                </label>
+                <label htmlFor="img-2" className="next-slide">
+                  <span>&rsaquo;</span>
+                </label>
+              </div>
+            </li>
+            <input type="radio" name="radio-buttons" id="img-2" />
+            <li className="slide-container">
+              <div className="slide-image">
+                <img
+                  className="object-center"
+                  alt=""
+                  src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=820&q=80"
+                />
+              </div>
+              <div className="carousel-controls">
+                <label htmlFor="img-1" className="prev-slide">
+                  <span>&lsaquo;</span>
+                </label>
+                <label htmlFor="img-3" className="next-slide">
+                  <span>&rsaquo;</span>
+                </label>
+              </div>
+            </li>
+
+            <div className="carousel-dots">
+              <label
+                htmlFor="img-1"
+                className="carousel-dot"
+                id="img-dot-1"
+              ></label>
+              <label
+                htmlFor="img-2"
+                className="carousel-dot"
+                id="img-dot-2"
+              ></label>
+            </div>
+          </ul>
         </div>
-        <div className="banner-image">
-          <img src="/images/banner.png" alt="" />
-        </div>
+      </div>
+      <div className="text w-[800px] text-white absolute top-[550px] ml-10 text-[40px] flex flex-col items-center gap-y-5">
+        <button className="bg-white w-[100px] text-sm pb-1 pt-2 text-black font-bold">
+          LIFESTYLE
+        </button>
+        <p className="banner-decs uppercase font-extrabold">
+          Life and technology
+        </p>
+        <p className="text-[24px]">More of this less knowledge...</p>
       </div>
     </BannerStyle>
   );

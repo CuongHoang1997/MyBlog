@@ -6,7 +6,7 @@ const LabelStatusStyles = styled.span`
   display: inline-block;
   padding: 10px 15px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 500;
 `;
 /**

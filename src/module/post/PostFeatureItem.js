@@ -2,6 +2,7 @@ import { db } from "firebase-app/firebase-config";
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import slugify from "slugify";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
@@ -9,11 +10,6 @@ import PostImage from "./PostImage";
 import PostInfo from "./PostInfo";
 import PostTitle from "./PostTitle";
 const PostFeatureItemStyles = styled.div`
-  width: 100%;
-  border-radius: 16px;
-  position: relative;
-  height: 150px;
-  border-radius: 16px;
   .post {
     &-image {
       width: 100%;
@@ -46,9 +42,23 @@ const PostFeatureItemStyles = styled.div`
       margin-bottom: 16px;
     }
   }
-
-  @media screen and (min-width: 1024px) {
-    height: 252px;
+  .box-zoom-out {
+    border: 1px solid #ccc;
+    height: 350px;
+    margin: 10px;
+    overflow: hidden;
+    position: relative;
+    transform: translateX(10px);
+    transform: translateY(10px);
+  }
+  .box-zoom-out img {
+    transition: all 1s;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  .box-zoom-out:hover img {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
   }
 `;
 const PostFeatureItem = ({ data }) => {
@@ -61,23 +71,31 @@ const PostFeatureItem = ({ data }) => {
 
   return (
     <PostFeatureItemStyles>
-      <PostImage url={data.image} alt="image"></PostImage>
-      <div className="post-overlay"></div>
-      <div className="post-content">
-        <div className="post-top">
-          {category && (
-            <PostCategory to={`/category/${data.category?.name}`}>
-              {category.name}
-            </PostCategory>
-          )}
-          <PostInfo
-            author={user?.fullname}
-            to={`/user/${data.user?.username}`}
-            date={formatDate}
-          ></PostInfo>
+      <NavLink to={data.slug}>
+        <div className="box-zoom-out rounded-[16px] mb-5 ">
+          <PostImage
+            className="img h-full"
+            url={data.image}
+            alt="image"
+          ></PostImage>
+          <div className="post-overlay"></div>
+          <div className="post-content">
+            <div className="post-top">
+              {category && (
+                <PostCategory to={`/category/${data.category?.name}`}>
+                  {category.name}
+                </PostCategory>
+              )}
+              <PostInfo
+                author={user?.fullname}
+                to={`/user/${data.user?.username}`}
+                date={formatDate}
+              ></PostInfo>
+            </div>
+            <PostTitle to={data.slug}>{data.title}</PostTitle>
+          </div>
         </div>
-        <PostTitle to={data.slug}>{data.title}</PostTitle>
-      </div>
+      </NavLink>
     </PostFeatureItemStyles>
   );
 };

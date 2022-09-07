@@ -6,14 +6,14 @@ const PostTitleStyles = styled.div`
   font-weight: bold;
   line-height: 1.5;
   display: block;
-  font-size: 22px;
+  font-size: 30px;
   color: white;
   margin-bottom: 6px;
 `;
 
 const PostTitle = ({ children, className = "", to = "/" }) => {
   return (
-    <PostTitleStyles className={className}>
+    <PostTitleStyles className={`link ${className}`}>
       <NavLink to={to}>{children}</NavLink>
     </PostTitleStyles>
   );

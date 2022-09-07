@@ -20,8 +20,8 @@ const PostNewestItemStyles = styled.div`
     &-image {
       display: block;
       flex-shrink: 0;
-      width: 180px;
-      height: 130px;
+      width: 300px;
+      height: 200px;
       border-radius: 12px;
     }
     &-category {
@@ -30,8 +30,20 @@ const PostNewestItemStyles = styled.div`
 
     &-title {
       color: black;
-      font-size: 16px;
+      font-size: 30px;
     }
+  }
+  .box-zoom-out {
+    border: 1px solid #ccc;
+    margin: 10px;
+    position: relative;
+  }
+  .box-zoom-out img {
+    transition: all 1s;
+    transform: scale(1);
+  }
+  .box-zoom-out:hover img {
+    transform: scale(1.1);
   }
 `;
 const PostNewestItem = ({ data }) => {
@@ -42,10 +54,15 @@ const PostNewestItem = ({ data }) => {
   if (!data) return null;
   return (
     <PostNewestItemStyles>
-      <div className="post-image">
-        <PostImage url={data.image}></PostImage>
+      <div className="post-image box-zoom-out">
+        <PostImage
+          className="img"
+          to={`/${data.slug}`}
+          url={data.image}
+        ></PostImage>
       </div>
-      <div className="post-content">
+
+      <div className="post-content ">
         <PostCategory
           to={`/category/${data.category?.name}`}
           className="post-category"

@@ -3,7 +3,7 @@ import React from "react";
 const ActionDelete = ({ onClick = () => {} }) => {
   return (
     <span
-      className="flex items-center justify-center w-10 h-10 border border-gray-200 rounded cursor-pointer"
+      className="flex items-center justify-center w-14 h-14 border border-gray-200 rounded cursor-pointer"
       onClick={onClick}
     >
       <svg

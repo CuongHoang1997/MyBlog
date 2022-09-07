@@ -9,11 +9,13 @@ const TableStyles = styled.div`
   }
   thead {
     background-color: #f7f7f8;
+    font-size: 24px;
   }
   th,
   td {
     vertical-align: middle;
     white-space: nowrap;
+    font-size: 20px;
   }
   th {
     padding: 20px 30px;

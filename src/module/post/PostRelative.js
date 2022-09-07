@@ -31,7 +31,7 @@ const PostRelative = ({ categoryId = "" }) => {
     <div>
       <div className="post-related">
         <Heading>Bài viết liên quan</Heading>
-        <div className="grid-layout grid-layout--primary">
+        <div className="grid grid-cols-4 gap-10">
           {posts.map((item) => (
             <PostItem key={item.id} data={item}></PostItem>
           ))}

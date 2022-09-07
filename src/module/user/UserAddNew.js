@@ -59,7 +59,7 @@ const UserAddNew = () => {
         desc="Thêm người dùng vào hệ thống"
       ></DashboardHeading>
       <form onSubmit={handleSubmit(handleAddUser)}>
-        <div className="w-[260px] mx-auto mb-5">
+        <div className="w-[350px] mx-auto mb-5">
           <ImageUpload
             className="!rounded-full"
             handleDelete={handleDelete}

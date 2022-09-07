@@ -10,12 +10,11 @@ const DashboardHeaderStyles = styled.div`
   background-color: white;
   border-bottom: 1px solid #eee;
   display: flex;
-  justify-content: space-between;
   gap: 20px;
   align-items: center;
   .header-avatar {
-    width: 52px;
-    height: 52px;
+    width: 70px;
+    height: 70px;
     img {
       width: 100%;
       height: 100%;
@@ -44,7 +43,7 @@ const DashboardHeaderStyles = styled.div`
     margin-left: 40px;
   }
   .menu-link {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
   }
 `;
@@ -83,9 +82,12 @@ const DashboardHeader = () => {
       <div className="container flex justify-between items-center">
         <div className="header">
           <img srcSet="/images/logo.png 4x" alt="" className="logo" />
-          <ul className="menu">
+          <ul className="menu ">
             {menuLinks.map((item) => (
-              <li className="menu-item" key={item.title}>
+              <li
+                className="menu-item transform  transition duration-500 hover:scale-125 hover:text-blue-400"
+                key={item.title}
+              >
                 <NavLink className="menu-link" to={item.url}>
                   {item.title}
                 </NavLink>
@@ -93,7 +95,7 @@ const DashboardHeader = () => {
             ))}
           </ul>
         </div>
-        <div className="flex gap-x-5">
+        <div className="flex items-center gap-x-5">
           <Button to="/manage/add-post" className="header-button" height="52px">
             Thêm bài viết
           </Button>

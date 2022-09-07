@@ -11,7 +11,7 @@ const PostItemStyles = styled.div`
   align-items: flex-start;
   .post {
     &-image {
-      height: 202px;
+      height: 300px;
       margin-bottom: 20px;
       display: block;
       width: 100%;
@@ -23,7 +23,7 @@ const PostItemStyles = styled.div`
     }
     &-title {
       color: black;
-      font-size: 16px;
+      font-size: 30px;
     }
   }
 `;

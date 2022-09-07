@@ -13,14 +13,14 @@ const Toggle = (props) => {
         onChange={() => {}}
       />
       <div
-        className={`inline-block w-[80px] h-[40px] relative cursor-pointer rounded-full p-1 transition-all ${
+        className={`inline-block w-[125px] h-[64px] relative cursor-pointer rounded-full p-1 transition-all ${
           on ? "bg-green-500" : "bg-gray-300"
         }`}
         {...rest}
       >
         <span
-          className={`transition-all w-8 h-8 bg-white rounded-full inline-block ${
-            on ? "translate-x-[40px]" : ""
+          className={`transition-all w-14 h-14 bg-white rounded-full inline-block ${
+            on ? "translate-x-[60px]" : ""
           }`}
         ></span>
       </div>

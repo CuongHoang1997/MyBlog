@@ -71,7 +71,7 @@ const PostManage = () => {
           title="Bài viết"
           desc="Quản lý Bài viết"
         ></DashboardHeading>
-        <div className="mr-20 w-[200px]">
+        <div className="mr-20 w-[300px] text-[20px]">
           <NavLink to="/manage/add-post">
             <button className="btn-add mb-5 mx-auto w-full bg-green-500 p-3 text-white rounded-lg">
               Thêm bài viết
@@ -101,15 +101,15 @@ const PostManage = () => {
             posts.map((item) => (
               <tr key={item.id}>
                 <td>{item.id.slice(0, 5) + "..."}</td>
-                <td>{item.title}</td>
+                <td title={item.title}>{item.title.slice(0, 25) + "..."}</td>
                 <td>{item.category.name}</td>
                 <td>
                   <div className="flex items-center gap-x-5">
-                    <div className="w-20">
+                    <div className="w-[130px]">
                       <img
                         src={item?.image}
                         alt=""
-                        className="w-20 h-10 object-cover rounded-lg"
+                        className="w-[150px] h-20 object-cover rounded-lg"
                       />
                     </div>
                     <div className="flex flex-col">
@@ -135,7 +135,7 @@ const PostManage = () => {
                   )}
                 </td>
                 <td>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between gap-x-3 items-center">
                     <ActionView
                       onClick={() => {
                         navigate(`/${item.slug}`);

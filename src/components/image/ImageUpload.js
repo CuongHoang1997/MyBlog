@@ -13,7 +13,7 @@ const ImageUpload = (props) => {
   return (
     <label
       className={`cursor-pointer flex items-center justify-center bg-gray-100 border border-dashed
-       w-full min-h-[260px] rounded-lg ${className} relative overflow-hidden`}
+       w-full min-h-[350px] rounded-lg ${className} relative overflow-hidden`}
     >
       <input
         type="file"

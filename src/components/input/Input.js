@@ -7,12 +7,13 @@ const InputStyles = styled.div`
   width: 100%;
   input {
     width: 100%;
-    padding: ${(props) => (props.hasIcon ? "10px 60px 10px 10px" : "10px")};
+    padding: ${(props) => (props.hasIcon ? "16px 60px 16px 16px" : "16px")};
     border: 2px solid transparent;
     border-radius: 6px;
     background-color: ${(props) => props.theme.grayLight};
     font-weight: 500;
     transition: all 0.3s linear;
+    font-size: 20px;
   }
   input:focus {
     border-color: ${(props) => props.theme.primary};

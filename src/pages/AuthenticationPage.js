@@ -3,26 +3,14 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const AuthenticationPageStyle = styled.div`
-  min-height: 100vh;
   align-items: center;
   display: flex;
-  position: relative;
-  .logo-lg {
-    min-width: 800px;
-    position: absolute;
-    right: 50%;
-    transform: translateX(10%);
-  }
-  .signup {
-    position: absolute;
-    right: 50%;
-    transform: translateX(85%);
-  }
+
   .heading {
     text-align: center;
     color: ${(props) => props.theme.primary};
     font-weight: bold;
-    font-style: 40px;
+    font-size: 60px;
   }
   .error {
     color: red;
@@ -31,6 +19,7 @@ const AuthenticationPageStyle = styled.div`
   }
   .have-account {
     margin-left: 20px;
+    font-size: 20px;
     a {
       text-decoration: none;
       color: ${(props) => props.theme.primary};
@@ -42,9 +31,13 @@ const AuthenticationPageStyle = styled.div`
 const AuthenticationPage = ({ children }) => {
   return (
     <AuthenticationPageStyle>
-      <img srcSet="/images/logo-lg.gif 3x" alt="" className="logo-lg" />
-      <div className="signup">
-        <NavLink to="/">
+      <div className="signin my-10 mx-auto border rounded-lg px-10 py-20 shadow-2xl">
+        <NavLink to="/" className="flex items-center justify-center gap-x-3">
+          <img
+            srcSet="https://seeklogo.com/images/S/sb-logo-43138A1D73-seeklogo.com.png 1.5x"
+            alt=""
+            className="logo-lg "
+          />
           <h1 className="heading">Social Blogging</h1>
         </NavLink>
         {children}

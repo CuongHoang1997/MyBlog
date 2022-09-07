@@ -1,5 +1,4 @@
 import React from "react";
-import slugify from "slugify";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -10,7 +9,7 @@ const PostNewestLargeStyles = styled.div`
     &-image {
       display: block;
       margin-bottom: 16px;
-      height: 400px;
+      height: 600px;
       border-radius: 16px;
     }
 
@@ -18,7 +17,7 @@ const PostNewestLargeStyles = styled.div`
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 14px;
+      font-size: 20px;
       font-weight: 600;
       margin-left: auto;
     }
@@ -33,10 +32,22 @@ const PostNewestLargeStyles = styled.div`
       color: black;
     }
   }
+  .box-zoom-out {
+    border: 1px solid #ccc;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .box-zoom-out img {
+    transition: all 1s;
+    transform: scale(1.2);
+  }
+  .box-zoom-out:hover img {
+    transform: scale(1);
+  }
 `;
 
 const PostNewestLarge = ({ data }) => {
-  console.log(data);
   const date = data?.createdAt?.seconds
     ? new Date(data?.createdAt?.seconds * 1000)
     : new Date();
@@ -44,8 +55,12 @@ const PostNewestLarge = ({ data }) => {
   if (!data) return null;
   return (
     <PostNewestLargeStyles>
-      <div className="post-image">
-        <PostImage url={data.image}></PostImage>
+      <div className="post-image box-zoom-out">
+        <PostImage
+          className="img"
+          to={`/${data.slug}`}
+          url={data.image}
+        ></PostImage>
       </div>
       <PostCategory to={`/category/${data.category?.name}`}>
         {data.category?.name}

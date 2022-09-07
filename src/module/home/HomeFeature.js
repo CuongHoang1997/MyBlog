@@ -21,10 +21,10 @@ const HomeFeature = () => {
       colRef,
       where("status", "==", 1),
       where("hot", "==", true),
-      limit(3)
+      limit(6)
     );
     onSnapshot(q, (snapshot) => {
-      const result = []; 
+      const result = [];
       snapshot.forEach((doc) => {
         result.push({
           id: doc.id,

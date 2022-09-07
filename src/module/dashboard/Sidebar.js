@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const SidebarStyles = styled.div`
-  width: 300px;
+  width: 400px;
   background: #ffffff;
   box-shadow: 10px 10px 20px rgba(218, 213, 213, 0.5);
   border-radius: 12px;
@@ -14,9 +14,10 @@ const SidebarStyles = styled.div`
     display: flex;
     align-items: center;
     font-weight: 600;
+    font-size: 30px;
     gap: 0 20px;
     img {
-      max-width: 50px;
+      max-width: 100px;
     }
     margin-bottom: 20px;
     padding: 20px 20px 0;
@@ -25,8 +26,9 @@ const SidebarStyles = styled.div`
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 14px 20px;
-    font-weight: 500;
+    padding: 24px 20px;
+    font-weight: 600;
+    font-size: 24px;
     color: ${(props) => props.theme.gray80};
     margin-bottom: 20px;
     cursor: pointer;
